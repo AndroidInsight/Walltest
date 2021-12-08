@@ -17,15 +17,11 @@ class _HomeState extends State<Home> {
 
   int _currentIndex = 0;
   final tabs = [
-    Center(
-      child: Container(
+    const Center(
           child: HomeTab()
-      ),
     ),
-    Center(
-      child: Container(
-        child: Explore() ,
-      ),
+    const Center(
+      child: Explore(),
     ),
     Center(
       child: Container(
