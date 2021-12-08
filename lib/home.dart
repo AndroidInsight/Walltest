@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
           child: HomeTab()
     ),
     const Center(
-      child: Explore(),
+      child: MyHomePage(title: '',)
     ),
     Center(
       child: Container(
@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        items: [
+        items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.home),
               title: Text('Home'),

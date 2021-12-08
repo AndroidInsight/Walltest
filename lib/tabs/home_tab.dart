@@ -28,41 +28,39 @@ class _HomeState extends State<HomeTab> {
 
   final List<Widget> imageSliders = imgList
       .map((item) => Container(
-    child: Container(
-      margin: EdgeInsets.all(5.0),
-      child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(30.0)),
-          child: Stack(
-            children: <Widget>[
-              Image.network(
-                item,
-                fit: BoxFit.cover,
-                width: 1000.0,
-                height: 1000,
-              ),
-              Positioned(
-                bottom: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromARGB(200, 0, 0, 0),
-                        Color.fromARGB(0, 0, 0, 0)
-                      ],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 20.0),
+        margin: const EdgeInsets.all(5.0),
+        child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+            child: Stack(
+              children: <Widget>[
+                Image.network(
+                  item,
+                  fit: BoxFit.cover,
+                  width: 1000.0,
+                  height: 1000,
                 ),
-              ),
-            ],
-          )),
-    ),
-  ))
+                Positioned(
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromARGB(200, 0, 0, 0),
+                          Color.fromARGB(0, 0, 0, 0)
+                        ],
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 20.0),
+                  ),
+                ),
+              ],
+            )),
+      ))
       .toList();
 
 
@@ -74,31 +72,29 @@ class _HomeState extends State<HomeTab> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xfff5f8fd),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    margin: EdgeInsets.symmetric(horizontal: 24),
-                    padding: EdgeInsets.symmetric(horizontal: 24),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                  hintText: "search wallpapers",
-                                  border: InputBorder.none),
-                            )),
-                      ],
-                    ),
+            Column(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xfff5f8fd),
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                ],
-              ),
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    children: const <Widget>[
+                      Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintText: "search wallpapers",
+                                border: InputBorder.none),
+                          )),
+                    ],
+                  ),
+                ),
+              ],
             ), //SearchBar
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Expanded(
@@ -125,7 +121,7 @@ class _HomeState extends State<HomeTab> {
                   child: Container(
                     width: 7.0,
                     height: 7.0,
-                    margin: EdgeInsets.symmetric(horizontal: 4),
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: (Theme.of(context).brightness == Brightness.dark
@@ -136,7 +132,7 @@ class _HomeState extends State<HomeTab> {
                 );
               }).toList(),
             ), //IndicatorDots
-            SizedBox(
+            const SizedBox(
               height: 80,
             )
           ]),
