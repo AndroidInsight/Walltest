@@ -3,10 +3,6 @@ import 'package:walltest/tabs/notes.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
-import '../widgets.dart';
-
-
 class Explore extends StatefulWidget {
   const Explore({Key? key}) : super(key: key);
 
@@ -15,55 +11,56 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-
-final List<Note> _notes = <Note>[];
+  final List<Note> _notes = <Note>[];
 
   Future<List<Note>> fetchNotes() async {
-
-    var url = Uri.parse("https://raw.githubusercontent.com/AndroidInsight/Foster.json/main/Foster.json");
+    var url = Uri.parse(
+        "https://raw.githubusercontent.com/AndroidInsight/Foster.json/main/Foster.json");
 
     final response = await http.get(url);
-   final notes = <Note>[];
+    final notes = <Note>[];
 
-    if(response.statusCode == 200) {
-
+    if (response.statusCode == 200) {
       final notesJson = json.decode(response.body);
       for (final noteJson in notesJson) {
-       notes.add(Note.fromJson(noteJson));
+        notes.add(Note.fromJson(noteJson));
       }
     }
     return notes;
   }
 
-
   @override
   Widget build(BuildContext context) {
-void initState() {
-  fetchNotes().then((value) {
-    setState(() {
-      _notes.addAll(value);
-    });
-  }
-  );
-  super.initState();
-}
+    void initState() {
+      fetchNotes().then((value) {
+        setState(() {
+          _notes.addAll(value);
+        });
+      });
+      super.initState();
+    }
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
-      body: ListView.builder(
+      body: GridView.builder(
+        itemCount: _notes.length,
         itemBuilder: (context, index) {
           return Card(
-            child: Image.network(_notes[index].img),
-            );
+            color: Colors.red,
+            elevation: 10,
+            child: Center(
 
+              child: Image.network(_notes[index].img),
+            ),
+          );
         },
-        itemCount: _notes.length,
-      ),
+        gridDelegate:
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
 
+      ),
     );
   }
 }
-
