@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<Photo>> fetchPhotos(http.Client client) async {
   final response = await client
-      .get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
+      .get(Uri.parse('https://androidinsight.github.io/myapi/photos.json'));
 
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parsePhotos, response.body);
@@ -21,15 +22,13 @@ List<Photo> parsePhotos(String responseBody) {
 }
 
 class Photo {
-  final int albumId;
-  final int id;
+
   final String title;
   final String url;
   final String thumbnailUrl;
 
   const Photo({
-    required this.albumId,
-    required this.id,
+
     required this.title,
     required this.url,
     required this.thumbnailUrl,
@@ -37,16 +36,13 @@ class Photo {
 
   factory Photo.fromJson(Map<String, dynamic> json) {
     return Photo(
-      albumId: json['albumId'] as int,
-      id: json['id'] as int,
+
       title: json['title'] as String,
       url: json['url'] as String,
       thumbnailUrl: json['thumbnailUrl'] as String,
     );
   }
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -102,14 +98,29 @@ class PhotosList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+    return Container(
+      padding: EdgeInsets.all(7),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 5,
+          crossAxisSpacing: 5,
+
+        ),
+        itemCount: photos.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+
+              Image.network(photos[index].thumbnailUrl,
+              fit: BoxFit.cover,
+              width: 180.0,
+              height: 170.0,)
+
+            ],
+          );
+        },
       ),
-      itemCount: photos.length,
-      itemBuilder: (context, index) {
-        return Image.network(photos[index].thumbnailUrl);
-      },
     );
   }
 }
