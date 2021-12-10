@@ -23,9 +23,9 @@ class _HomeState extends State<Home> {
     const Center(
       child: MyHomePage(title: '',)
     ),
-    Center(
+     Center(
       child: Container(
-        color: Colors.green,
+        color: Colors.red,
       ),
     ),
     Center(
