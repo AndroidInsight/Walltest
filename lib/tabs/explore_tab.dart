@@ -1,48 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-Future<List<Photo>> fetchPhotos(http.Client client) async {
-  final response = await client
-      .get(Uri.parse('https://androidinsight.github.io/myapi/photos.json'));
-
-  // Use the compute function to run parsePhotos in a separate isolate.
-  return compute(parsePhotos, response.body);
-}
-
-// A function that converts a response body into a List<Photo>.
-List<Photo> parsePhotos(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<Photo>((json) => Photo.fromJson(json)).toList();
-}
-
-class Photo {
-
-  final String title;
-  final String url;
-  final String thumbnailUrl;
-
-  const Photo({
-
-    required this.title,
-    required this.url,
-    required this.thumbnailUrl,
-  });
-
-  factory Photo.fromJson(Map<String, dynamic> json) {
-    return Photo(
-
-      title: json['title'] as String,
-      url: json['url'] as String,
-      thumbnailUrl: json['thumbnailUrl'] as String,
-    );
-  }
-}
+import 'package:walltest/models/wall_model.dart';
+import 'package:walltest/services/walls_api.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -71,8 +31,8 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: FutureBuilder<List<Photo>>(
-        future: fetchPhotos(http.Client()),
+      body: FutureBuilder<List<WallModel>>(
+        future: WallsApi.getPhotos(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -94,25 +54,25 @@ class MyHomePage extends StatelessWidget {
 class PhotosList extends StatelessWidget {
   const PhotosList({Key? key, required this.photos}) : super(key: key);
 
-  final List<Photo> photos;
+  final List<WallModel> photos;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(7),
+      padding: const EdgeInsets.all(7),
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 5,
           crossAxisSpacing: 5,
-
         ),
         itemCount: photos.length,
         itemBuilder: (context, index) {
-          return Image.network(photos[index].thumbnailUrl,
+          return Image.network(
+            photos[index].thumbnailUrl,
             fit: BoxFit.cover,
-            width: 180.0,
-            height: 170.0,);
+            height: 4500,
+          );
         },
       ),
     );
